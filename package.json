@@ -1,0 +1,20 @@
+{
+  "name": "test_node_service",
+  "version": "1.0.0",
+  "description": "This service suppose to test my node js power. But just a little bit.",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daryaego/test_node_service.git"
+  },
+  "author": "@daryaego",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daryaego/test_node_service/issues"
+  },
+  "homepage": "https://github.com/daryaego/test_node_service#readme"
+}
