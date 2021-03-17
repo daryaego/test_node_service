@@ -2,15 +2,20 @@ const http = require('http');
 const { readFile } = require('fs');
 
 const service = http.createServer((request, response) => {
-    let [ path, queryString ] = request.url.split('?');
+    const { url, method } = request;
+    let [ path, queryString ] = url.split('?');
     if (!queryString) queryString = ''
     switch (path) {
         case '/source':
-            getSource(response);
-            break;
+            if (method === 'GET') {
+                getSource(response);
+                break;
+            }
         case '/hello':
-            getHello(parseQueryParams(queryString), response);
-            break;
+            if (method === 'GET') {
+                getHello(parseQueryParams(queryString), response);
+                break;
+            }
         default:
             notFound(response);
             break;
