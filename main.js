@@ -17,8 +17,12 @@ const service = http.createServer((request, response) => {
                 break;
             }
         case '/admin':
-            if (method === 'GET' && headers.authorization === 'test') {
-                getAdmin(headers.authorization, response);
+            if (method === 'GET') {
+                if (headers.authorization === 'test') {
+                    getAdmin(headers.authorization, response);
+                } else {
+                    forbidden(response);
+                }
                 break;
             }
         default:
@@ -26,6 +30,11 @@ const service = http.createServer((request, response) => {
             break;
     }
 });
+
+const forbidden = (response) => {
+    response.statusCode = 403;
+    response.end();
+}
 
 const getAdmin = (authorization, response) => {
     response.write(`<h1>Hello, ${authorization}</h1>`);
