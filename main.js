@@ -14,7 +14,7 @@ const service = http.createServer((request, response) => {
 });
 
 const getSource = (response) => {
-    readFile('./main.j0s', 'utf8', (err, data) => {
+    readFile('./main.js', 'utf8', (err, data) => {
         if (!err) {
             response.write(data);
             response.end();
