@@ -2,7 +2,7 @@ const http = require('http');
 const { readFile } = require('fs');
 
 const service = http.createServer((request, response) => {
-    const { url, method } = request;
+    const { url, method, headers } = request;
     let [ path, queryString ] = url.split('?');
     if (!queryString) queryString = ''
     switch (path) {
@@ -16,11 +16,21 @@ const service = http.createServer((request, response) => {
                 getHello(parseQueryParams(queryString), response);
                 break;
             }
+        case '/admin':
+            if (method === 'GET' && headers.authorization === 'test') {
+                getAdmin(headers.authorization, response);
+                break;
+            }
         default:
             notFound(response);
             break;
     }
 });
+
+const getAdmin = (authorization, response) => {
+    response.write(`<h1>Hello, ${authorization}</h1>`);
+    response.end();
+}
 
 const parseQueryParams = (queryString) => {
     return queryString.split('&').reduce((accumulator, queryParameterString) => {
