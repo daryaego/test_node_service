@@ -25,11 +25,24 @@ const service = http.createServer((request, response) => {
                 }
                 break;
             }
+        case '/sum':
+            if (method === 'POST') {
+                postSum(parseQueryParams(queryString), response);
+                break;
+            }
         default:
             notFound(response);
             break;
     }
 });
+
+const postSum = (query, response) => {
+    const result = query.x
+        .filter(item => typeof item === 'number' && item % 2 === 1)
+        .reduce((accumulator, item) => accumulator += item, 0);
+    response.write(JSON.stringify(result));
+    response.end();
+}
 
 const forbidden = (response) => {
     response.statusCode = 403;
@@ -44,7 +57,11 @@ const getAdmin = (authorization, response) => {
 const parseQueryParams = (queryString) => {
     return queryString.split('&').reduce((accumulator, queryParameterString) => {
         const [key, value] = queryParameterString.split('=');
-        accumulator[key] = value;
+        try {
+            accumulator[key] = JSON.parse(value);
+        } catch (error) {
+            accumulator[key] = value;
+        }
         return accumulator;
     }, {})
 }
