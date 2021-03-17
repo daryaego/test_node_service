@@ -2,8 +2,8 @@ const http = require('http');
 const { readFile } = require('fs');
 
 const service = http.createServer((request, response) => {
-    const { url } = request;
-    switch (url) {
+    const [ path, queryString ] = request.url.split('?')
+    switch (path) {
         case '/source':
             getSource(response);
             break;
