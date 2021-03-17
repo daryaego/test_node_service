@@ -1,8 +1,28 @@
-const http = require('http')
+const http = require('http');
+const { readFile } = require('fs');
 
 const service = http.createServer((request, response) => {
-    notFound(response);
+    const { url } = request;
+    switch (url) {
+        case '/source':
+            getSource(response);
+            break;
+        default:
+            notFound(response);
+            break;
+    }
 });
+
+const getSource = (response) => {
+    readFile('./main.j0s', 'utf8', (err, data) => {
+        if (!err) {
+            response.write(data);
+            response.end();
+        } else {
+            internalServerError(err, response);
+        }
+    })
+}
 
 const internalServerError = (error, response) => {
     response.statusCode = 500;
