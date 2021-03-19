@@ -30,11 +30,21 @@ const service = http.createServer((request, response) => {
                 postSum(parseQueryParams(queryString), response);
                 break;
             }
+        case '/array':
+            if (method === 'POST') {
+                postArray(parseQueryParams(queryString), response);
+                break;
+            }
         default:
             notFound(response);
             break;
     }
 });
+
+postArray = (query, response) => {
+     response.write(JSON.stringify(query.x.sort((a, b) => a - b)));
+     response.end();
+}
 
 const postSum = (query, response) => {
     const result = query.x
