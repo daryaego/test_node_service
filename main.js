@@ -54,11 +54,6 @@ const postSum = (query, response) => {
     response.end();
 }
 
-const forbidden = (response) => {
-    response.statusCode = 403;
-    response.end();
-}
-
 const getAdmin = (authorization, response) => {
     response.write(`<h1>Hello, ${authorization}</h1>`);
     response.end();
@@ -93,6 +88,11 @@ const getSource = (response) => {
             internalServerError(err, response);
         }
     })
+}
+
+const forbidden = (response) => {
+    response.statusCode = 403;
+    response.end();
 }
 
 const internalServerError = (error, response) => {
