@@ -42,11 +42,17 @@ const service = http.createServer((request, response) => {
 });
 
 postArray = (query, response) => {
-     response.write(JSON.stringify(query.x.sort((a, b) => a - b)));
-     response.end();
+    if (!Array.isArray(query.x)) {
+        return badRequest(`'x' expected to be an instance of array`, response);
+    }
+    response.write(JSON.stringify(query.x.sort((a, b) => a - b)));
+    response.end();
 }
 
 const postSum = (query, response) => {
+    if (!Array.isArray(query.x)) {
+        return badRequest(`'x' expected to be an instance of array`, response);
+    }
     const result = query.x
         .filter(item => typeof item === 'number' && item % 2 === 1)
         .reduce((accumulator, item) => accumulator += item, 0);
@@ -88,6 +94,12 @@ const getSource = (response) => {
             internalServerError(err, response);
         }
     })
+}
+
+const badRequest = (error, response) => {
+    response.statusCode = 400;
+    response.write(JSON.stringify(error));
+    response.end();
 }
 
 const forbidden = (response) => {
