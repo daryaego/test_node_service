@@ -23,3 +23,18 @@ describe('GET /hello', function() {
     })
   })
 
+describe('GET /admin', () => {
+  it(`return 403 when Authorization is omitted`, () => {
+    return request(app)
+      .get('/admin')
+      .expect(403);
+  });
+
+  it(`return greetings when Authorization=test`, () => {
+    return request(app)
+      .get('/admin')
+      .set('Authorization', 'test')
+      .expect(200)
+      .expect('<h1>Hello, test</h1>');
+  })
+})
