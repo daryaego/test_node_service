@@ -41,7 +41,7 @@ const service = http.createServer((request, response) => {
     }
 });
 
-postArray = (query, response) => {
+const postArray = (query, response) => {
     if (!Array.isArray(query.x)) {
         return badRequest(`'x' expected to be an instance of array`, response);
     }
@@ -60,8 +60,12 @@ const postSum = (query, response) => {
     response.end();
 }
 
+const sayHelloTo = (user) => {
+    return `<h1>Hello, ${user}</h1>`
+}
+
 const getAdmin = (authorization, response) => {
-    response.write(`<h1>Hello, ${authorization}</h1>`);
+    response.write(sayHelloTo(authorization));
     response.end();
 }
 
@@ -81,7 +85,7 @@ const getHello = (query, response) => {
     if (!query.hasOwnProperty('name')) {
         query.name = 'World';
     }
-    response.write(`<h1>Hello, ${query.name}</h1>`);
+    response.write(sayHelloTo(query.name));
     response.end();
 }
 
