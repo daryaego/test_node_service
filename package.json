@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
-    "test": "test"
+    "test": "mocha",
+    "watch-test": "mocha --watch"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/daryaego/test_node_service/issues"
   },
-  "homepage": "https://github.com/daryaego/test_node_service#readme"
+  "homepage": "https://github.com/daryaego/test_node_service#readme",
+  "devDependencies": {
+    "mocha": "^8.3.2",
+    "supertest": "^6.1.3"
+  }
 }

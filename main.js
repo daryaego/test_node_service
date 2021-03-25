@@ -125,3 +125,5 @@ const notFound = (response) => {
 
 service.listen(3000);
 console.log('Service listening on port 3000');
+
+module.exports = service;
