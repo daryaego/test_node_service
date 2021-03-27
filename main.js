@@ -1,6 +1,7 @@
 const http = require('http');
 const { readFile } = require('fs');
 const { sayHelloTo } = require('./data-provider.js');
+const { responseString, responseJson, badRequest, forbidden, internalServerError, notFound } = require('./response.js')
 
 const service = http.createServer((request, response) => {
     const { url, method, headers } = request;
@@ -44,26 +45,23 @@ const service = http.createServer((request, response) => {
 
 const postArray = (query, response) => {
     if (!Array.isArray(query.x)) {
-        return badRequest(`'x' expected to be an instance of array`, response);
+        return badRequest(response, `'x' expected to be an instance of array`);
     }
-    response.write(JSON.stringify(query.x.sort((a, b) => a - b)));
-    response.end();
+    responseJson(response, query.x.sort((a, b) => a - b))
 }
 
 const postSum = (query, response) => {
     if (!Array.isArray(query.x)) {
-        return badRequest(`'x' expected to be an instance of array`, response);
+        return badRequest(response, `'x' expected to be an instance of array`);
     }
     const result = query.x
         .filter(item => typeof item === 'number' && item % 2 === 1)
         .reduce((accumulator, item) => accumulator += item, 0);
-    response.write(JSON.stringify(result));
-    response.end();
+    responseJson(response, result);
 }
 
 const getAdmin = (authorization, response) => {
-    response.write(sayHelloTo(authorization));
-    response.end();
+    responseString(response, sayHelloTo(authorization));
 }
 
 const parseQueryParams = (queryString) => {
@@ -82,43 +80,18 @@ const getHello = (query, response) => {
     if (!query.hasOwnProperty('name')) {
         query.name = 'World';
     }
-    response.write(sayHelloTo(query.name));
-    response.end();
+    responseString(response, sayHelloTo(query.name));
 }
 
 const getSource = (response) => {
     readFile('./main.js', 'utf8', (err, data) => {
         if (!err) {
-            response.write(data);
-            response.end();
+            responseString(response, data);
         } else {
-            internalServerError(err, response);
+            internalServerError(response, err);
         }
     })
 }
-
-const badRequest = (error, response) => {
-    response.statusCode = 400;
-    response.write(JSON.stringify(error));
-    response.end();
-}
-
-const forbidden = (response) => {
-    response.statusCode = 403;
-    response.end();
-}
-
-const internalServerError = (error, response) => {
-    response.statusCode = 500;
-    response.write(JSON.stringify(error));
-    response.end();
-}
-
-const notFound = (response) => {
-    response.statusCode = 404
-    response.write(`Sorry! I don't understand`);
-    response.end();
-};
 
 service.listen(3000);
 console.log('Service listening on port 3000');
