@@ -1,5 +1,6 @@
 const http = require('http');
 const { readFile } = require('fs');
+const { sayHelloTo } = require('./data-provider.js');
 
 const service = http.createServer((request, response) => {
     const { url, method, headers } = request;
@@ -58,10 +59,6 @@ const postSum = (query, response) => {
         .reduce((accumulator, item) => accumulator += item, 0);
     response.write(JSON.stringify(result));
     response.end();
-}
-
-const sayHelloTo = (user) => {
-    return `<h1>Hello, ${user}</h1>`
 }
 
 const getAdmin = (authorization, response) => {
