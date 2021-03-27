@@ -34,7 +34,7 @@ const service = http.createServer((request, response) => {
             }
         case '/sort':
             if (method === 'POST') {
-                postArray(parseQueryParams(queryString), response);
+                postSort(parseQueryParams(queryString), response);
                 break;
             }
         default:
@@ -43,7 +43,7 @@ const service = http.createServer((request, response) => {
     }
 });
 
-const postArray = (query, response) => {
+const postSort = (query, response) => {
     if (!Array.isArray(query.x)) {
         return badRequest(response, `'x' expected to be an instance of array`);
     }
