@@ -32,7 +32,7 @@ const service = http.createServer((request, response) => {
                 postSum(parseQueryParams(queryString), response);
                 break;
             }
-        case '/array':
+        case '/sort':
             if (method === 'POST') {
                 postArray(parseQueryParams(queryString), response);
                 break;
