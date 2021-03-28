@@ -1,6 +1,5 @@
 const http = require('http');
-const { readFile } = require('fs');
-const { sayHelloTo } = require('./data-provider.js');
+const { sayHelloTo, sortArray, getOddNumbersSum, getSourceText } = require('./data-provider.js');
 const { responseString, responseJson, badRequest, forbidden, internalServerError, notFound } = require('./response.js')
 
 const service = http.createServer((request, response) => {
@@ -47,17 +46,14 @@ const postSort = (query, response) => {
     if (!Array.isArray(query.x)) {
         return badRequest(response, `'x' expected to be an instance of array`);
     }
-    responseJson(response, query.x.sort((a, b) => a - b))
+    responseJson(response, sortArray(query.x))
 }
 
 const postSum = (query, response) => {
     if (!Array.isArray(query.x)) {
         return badRequest(response, `'x' expected to be an instance of array`);
     }
-    const result = query.x
-        .filter(item => typeof item === 'number' && item % 2 === 1)
-        .reduce((accumulator, item) => accumulator += item, 0);
-    responseJson(response, result);
+    responseJson(response, getOddNumbersSum(query.x));
 }
 
 const getAdmin = (authorization, response) => {
@@ -84,13 +80,11 @@ const getHello = (query, response) => {
 }
 
 const getSource = (response) => {
-    readFile('./main.js', 'utf8', (err, data) => {
-        if (!err) {
-            responseString(response, data);
-        } else {
-            internalServerError(response, err);
-        }
-    })
+    getSourceText().then(source => {
+        responseString(response, source);
+    }).catch(error => {
+        internalServerError(response, error);
+    });
 }
 
 service.listen(3000);
