@@ -73,7 +73,7 @@ const parseQueryParams = (queryString) => {
 }
 
 const getHello = (query, response) => {
-    if (!query.hasOwnProperty('name')) {
+    if (!Object.prototype.hasOwnProperty.call(query, 'name')) {
         query.name = 'World';
     }
     responseString(response, sayHelloTo(query.name));
