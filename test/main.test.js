@@ -38,3 +38,22 @@ describe('GET /admin', () => {
       .expect('<h1>Hello, test</h1>');
   })
 })
+
+describe('GET /source', () => {
+  it('returns string', () => {
+    return request(app)
+    .get('/source')
+    .expect(200)
+    .expect(res => {
+      if (typeof res === 'string') {
+        done()
+      }
+    })
+  });
+
+  it('returns 200 with random query params', () => {
+    return request(app)
+    .get('/source?sm_7th=6')
+    .expect(200)
+  })
+});
