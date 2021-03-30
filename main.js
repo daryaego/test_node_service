@@ -1,6 +1,7 @@
 const http = require('http');
 const { sayHelloTo, sortArray, getOddNumbersSum, getSourceText } = require('./data-provider.js');
-const { responseString, responseJson, badRequest, forbidden, internalServerError, notFound } = require('./response.js')
+const { responseString, responseJson, badRequest, forbidden, internalServerError, notFound } = require('./response.js');
+const port = process.env.PORT || 3000;
 
 const service = http.createServer((request, response) => {
     const { url, method, headers } = request;
@@ -87,7 +88,7 @@ const getSource = (response) => {
     });
 }
 
-service.listen(3000);
-console.log('Service listening on port 3000');
+service.listen(port);
+console.log(`Service listening on port ${port}`);
 
 module.exports = service;
