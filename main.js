@@ -1,6 +1,7 @@
 const http = require('http');
 const { sayHelloTo, sortArray, getOddNumbersSum, getSourceText } = require('./data-provider.js');
 const { responseString, responseJson, badRequest, forbidden, internalServerError, notFound } = require('./response.js');
+const { parseQueryParams } = require('./queryParse')
 const port = process.env.PORT || 3000;
 
 const service = http.createServer((request, response) => {
@@ -59,18 +60,6 @@ const postSum = (query, response) => {
 
 const getAdmin = (authorization, response) => {
     responseString(response, sayHelloTo(authorization));
-}
-
-const parseQueryParams = (queryString) => {
-    return queryString.split('&').reduce((accumulator, queryParameterString) => {
-        const [key, value] = queryParameterString.split('=');
-        try {
-            accumulator[key] = JSON.parse(value);
-        } catch (error) {
-            accumulator[key] = value;
-        }
-        return accumulator;
-    }, {})
 }
 
 const getHello = (query, response) => {
