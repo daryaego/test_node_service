@@ -9,7 +9,7 @@ function sortArray(array) {
 }
 
 function getOddNumbersSum(array) {
-    return array.filter(item => typeof item === 'number' && item % 2 === 1)
+    return array.map(item => parseFloat(item)).filter(item => typeof item === 'number' && item % 2 === 1)
         .reduce((accumulator, item) => accumulator += item, 0);
 }
 
