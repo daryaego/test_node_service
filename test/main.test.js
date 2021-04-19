@@ -45,7 +45,7 @@ describe('GET /source', () => {
     .get('/source')
     .expect(200)
     .expect(res => {
-      if (typeof res === 'string') {
+      if (typeof res === String) {
         done()
       }
     })
