@@ -57,3 +57,19 @@ describe('GET /source', () => {
     .expect(200)
   })
 });
+
+const array = [1, 2, 3, 9, 8, 7, 6, 5, 'test']
+describe('POST /sum', () => {
+  it('returns 200 and odd numbers sum', () => {
+    return request(app)
+    .post(`/sum?x=${array.join(',')}`)
+    .expect(200)
+    .expect(JSON.stringify(array.filter(value => value%2).reduce((acc, value) => acc + value, 0)))
+  })
+
+  it('returns 400 when x is not valid', () => {
+    return request(app)
+    .post(`/sum?x=kdjfghk`)
+    .expect(400)
+  })
+});
