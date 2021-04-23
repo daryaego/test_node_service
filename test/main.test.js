@@ -73,3 +73,19 @@ describe('POST /sum', () => {
     .expect(400)
   })
 });
+
+describe('POST /sort', () => {
+  it('returns 200 when x is valid', () => {
+    array.pop()
+    return request(app)
+    .post(`/sort?x=${array}`)
+    .expect(200)
+    .expect(JSON.stringify({ result: array.sort((a, b) => a - b) }))
+  })
+
+  it('returns 400 when x is not valid', () => {
+    return request(app)
+    .post(`/sort?x=kdjfghk`)
+    .expect(400)
+  })
+});
