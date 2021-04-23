@@ -64,7 +64,7 @@ describe('POST /sum', () => {
     return request(app)
     .post(`/sum?x=${array.join(',')}`)
     .expect(200)
-    .expect(JSON.stringify(array.filter(value => value%2).reduce((acc, value) => acc + value, 0)))
+    .expect(JSON.stringify({ result: array.filter(value => value%2).reduce((acc, value) => acc + value, 0) }))
   })
 
   it('returns 400 when x is not valid', () => {
