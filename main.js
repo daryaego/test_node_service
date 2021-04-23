@@ -6,8 +6,10 @@ const port = process.env.PORT || 3000;
 
 const service = http.createServer((request, response) => {
     const { url, method, headers } = request;
+    console.log(url)
     let [ path, queryString ] = url.split('?');
     if (!queryString) queryString = ''
+
     switch (path) {
         case '/source':
             if (method === 'GET') {
