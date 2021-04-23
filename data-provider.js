@@ -19,7 +19,10 @@ function getSourceFiles(path) {
             if (error) {
                 reject(error);
             }
-            result = result.filter(name => name.split('.').pop() === 'js')
+            result = result.filter(name => {
+                const extension = name.split('.').pop()
+                return extension === 'js' || extension === 'json' && name !== `package-lock.json`
+            })
             resolve(result);
         })
     })
@@ -42,7 +45,7 @@ async function getSourceText() {
     const files = await getSourceFiles(path)
     return (await Promise.all(files.map(file => {
         return getFileText(`${path}/${file}`);
-    }))).join('');
+    }))).join('\n');
 }
 
 module.exports = { sayHelloTo, sortArray, getOddNumbersSum, getSourceText };
