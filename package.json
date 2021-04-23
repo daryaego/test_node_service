@@ -4,7 +4,7 @@
   "description": "This service suppose to test my node js power. But just a little bit.",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js",
+    "start": "node src/main.js",
     "test": "mocha",
     "watch-test": "mocha --watch"
   },

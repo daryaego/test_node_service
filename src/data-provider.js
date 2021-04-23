@@ -22,7 +22,7 @@ function getSourceFiles(path) {
             result = result.filter(name => {
                 const extension = name.split('.').pop()
                 return extension === 'js' || extension === 'json' && name !== `package-lock.json`
-            })
+            }).map(name => `${path}${name}`)
             resolve(result);
         })
     })
@@ -41,10 +41,9 @@ function getFileText(file) {
 }
 
 async function getSourceText() {
-    path = './'
-    const files = await getSourceFiles(path)
+    const files = (await getSourceFiles('./')).concat(await getSourceFiles('./src/'))
     return (await Promise.all(files.map(file => {
-        return getFileText(`${path}/${file}`);
+        return getFileText(file);
     }))).join('\n');
 }
 
