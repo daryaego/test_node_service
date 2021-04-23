@@ -48,14 +48,14 @@ const postSort = (query, response) => {
     if (!Array.isArray(query.x)) {
         return badRequest(response, `'x' expected to be an instance of array`);
     }
-    responseJson(response, sortArray(query.x))
+    responseJson(response, { result: sortArray(query.x) })
 }
 
 const postSum = (query, response) => {
     if (!Array.isArray(query.x)) {
         return badRequest(response, `'x' expected to be an instance of array`);
     }
-    responseJson(response, getOddNumbersSum(query.x));
+    responseJson(response, { result: getOddNumbersSum(query.x) });
 }
 
 const getAdmin = (authorization, response) => {
