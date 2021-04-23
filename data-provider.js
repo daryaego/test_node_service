@@ -5,11 +5,11 @@ function sayHelloTo(user) {
 }
 
 function sortArray(array) {
-    return array.sort((a, b) => a - b);
+    return array.map(item => parseFloat(item)).filter(item => !isNaN(item)).sort((a, b) => a - b);
 }
 
 function getOddNumbersSum(array) {
-    return array.map(item => parseFloat(item)).filter(item => typeof item === 'number' && item % 2 === 1)
+    return array.map(item => parseFloat(item)).filter(item => !isNaN(item) && item % 2 === 1)
         .reduce((accumulator, item) => accumulator += item, 0);
 }
 
