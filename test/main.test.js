@@ -89,3 +89,17 @@ describe('POST /sort', () => {
     .expect(400)
   })
 });
+
+describe('random request', () => {
+  it(`returns 404 on random post`, () => {
+    return request(app)
+    .post('/sdf')
+    .expect(404);
+  })
+
+  it(`returns 404 on random get`, () => {
+    return request(app)
+    .get('/awds')
+    .expect(404);
+  })
+})
