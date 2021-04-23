@@ -1,4 +1,5 @@
 function responseString(response, answer, statusCode = 200) {
+    console.log(statusCode)
     response.statusCode = statusCode;
     if (answer) { response.write(answer); }
     response.end();
