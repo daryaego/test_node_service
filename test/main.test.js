@@ -40,15 +40,10 @@ describe('GET /admin', () => {
 })
 
 describe('GET /source', () => {
-  it('returns string', () => {
+  it('returns 200', () => {
     return request(app)
     .get('/source')
     .expect(200)
-    .expect(res => {
-      if (typeof res === String) {
-        done()
-      }
-    })
   });
 
   it('returns 200 with random query params', () => {
